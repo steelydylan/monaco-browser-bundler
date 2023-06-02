@@ -7,7 +7,7 @@
     "dev": "vite",
     "preview": "vite preview",
     "build:lib": "tsc",
-    "build": "vite build --outDir docs"
+    "build": "vite build"
   },
   "repository": {
     "type": "git",
