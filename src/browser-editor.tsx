@@ -17,9 +17,14 @@ export const BrowserEditor = ({ files, dependencies }: Props) => {
     code,
     updateCode,
     setEditorData,
+    addFile,
+    files: editorFiles,
   } = useBrowserEditor();
   const handleChange = (value: string) => {
     updateCode(value);
+  };
+  const handleAddFile = (fileName: string) => {
+    addFile("./" + fileName);
   };
 
   useEffect(() => {
@@ -27,13 +32,14 @@ export const BrowserEditor = ({ files, dependencies }: Props) => {
   }, [files, dependencies]);
 
   return (
-    <div className="flex gap-5 p-5 h-full">
+    <div className="flex gap-5 p-5 h-full flex-1">
       <div className="flex-1 h-full">
         <div className="text-sm font-medium text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 h-full flex flex-col">
           <EditorTab
-            files={files}
+            files={editorFiles}
             onChange={(key) => setActiveFile(key)}
             activeFile={activeFile}
+            onAddFile={handleAddFile}
           />
           {activeFile && (
             <Editor

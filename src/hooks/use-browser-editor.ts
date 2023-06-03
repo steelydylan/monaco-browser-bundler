@@ -11,6 +11,32 @@ export const browserEditorState = atom({
   },
 });
 
+const getLanguageFromFileName = (fileName: string) => {
+  const extension = fileName.split(".").pop();
+  switch (extension) {
+    case "js":
+      return "javascript";
+    case "ts":
+      return "typescript";
+    case "tsx":
+      return "typescript";
+    case "jsx":
+      return "javascript";
+    case "css":
+      return "css";
+    case "html":
+      return "html";
+    case "json":
+      return "json";
+    case "md":
+      return "markdown";
+    case "yml":
+      return "yaml";
+    default:
+      return "txt";
+  }
+};
+
 export const useBrowserEditor = () => {
   const [editorData, setEditorData] = useRecoilState(browserEditorState);
   const { files, dependencies } = editorData;
@@ -42,7 +68,6 @@ export const useBrowserEditor = () => {
     }));
   };
   const updateCode = (code: string) => {
-    console.log("update code");
     setEditorData((editorData) => {
       const key = Object.keys(editorData.files).find((key) => {
         if (editorData.files[key].active) {
@@ -66,6 +91,27 @@ export const useBrowserEditor = () => {
     });
   };
 
+  const addFile = (key: string) => {
+    setEditorData((editorData) => ({
+      ...editorData,
+      files: {
+        ...Object.keys(editorData.files).reduce((acc, cur) => {
+          acc[cur] = {
+            ...editorData.files[cur],
+            active: false,
+          };
+          return acc;
+        }, {} as Files),
+        [key]: {
+          value: "",
+          hidden: false,
+          active: true,
+          language: getLanguageFromFileName(key),
+        },
+      },
+    }));
+  };
+
   const activeFile = Object.keys(editorData.files).find((key) => {
     if (editorData.files[key].active) {
       return true;
@@ -82,6 +128,7 @@ export const useBrowserEditor = () => {
 
   return {
     editorData,
+    addFile,
     setActiveFile,
     activeFile,
     activeLanguage,

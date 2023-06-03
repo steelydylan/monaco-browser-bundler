@@ -1,0 +1,28 @@
+.FolderTree {
+  color: #fff;
+}
+
+.TreeNode {
+  display: flex;
+  align-items: center;
+}
+
+.TreeNodeToolBar {
+  display: flex;
+}
+
+.editingName {
+  display: flex;
+  align-items: center;
+}
+
+.editingName input {
+  width: 100px;
+  color: #666;
+  background-color: transparent;
+}
+
+.editableNameToolbar {
+  display: flex;
+  align-items: center;
+}

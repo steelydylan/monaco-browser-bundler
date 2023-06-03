@@ -28,6 +28,7 @@
   "dependencies": {
     "@types/react": "^18.2.6",
     "react-dom": "^18.2.0",
+    "react-folder-tree": "^5.1.1",
     "recoil": "^0.7.7",
     "string-replace-async": "^3.0.2"
   }

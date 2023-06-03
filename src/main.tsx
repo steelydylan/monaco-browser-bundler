@@ -43,7 +43,8 @@ const App = () => {
   return (
     <RecoilRoot>
       <div className="flex gap-5 p-5 h-full bg-black h-screen">
-        <div className="flex-1 h-full">
+        <div className="flex-1 h-full flex flex-row">
+          {/* <FileTree /> */}
           <BrowserEditor
             files={editorData.files}
             dependencies={editorData.dependencies}
