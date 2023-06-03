@@ -1,5 +1,6 @@
 import React from "react";
 import { browserBundle } from "browser-bundler";
+import { useDebounce } from "use-debounce";
 import { useBrowserEditor } from "./hooks/use-browser-editor";
 
 type Props = {
@@ -25,14 +26,18 @@ const buildSrcDoc = (code: string) => {
 export const Preview = ({ entryPoint }: Props) => {
   const { files } = useBrowserEditor();
   const [srcDoc, setSrcDoc] = React.useState("");
+  const [debouncedFiles] = useDebounce(files, 1000);
   React.useEffect(() => {
     async function init() {
-      const main = files[entryPoint];
+      const main = debouncedFiles[entryPoint];
       if (!main) return;
-      const bundledFiles = Object.entries(files).reduce((acc, [key, value]) => {
-        acc[key] = value.value;
-        return acc;
-      }, {});
+      const bundledFiles = Object.entries(debouncedFiles).reduce(
+        (acc, [key, value]) => {
+          acc[key] = value.value;
+          return acc;
+        },
+        {}
+      );
       const { code } = await browserBundle(main.value, {
         files: bundledFiles,
       });
@@ -40,7 +45,7 @@ export const Preview = ({ entryPoint }: Props) => {
       setSrcDoc(result);
     }
     init();
-  }, [files, entryPoint]);
+  }, [debouncedFiles, entryPoint]);
 
   return (
     <div className="rounded-md flex-1 h-full overflow-hidden">
