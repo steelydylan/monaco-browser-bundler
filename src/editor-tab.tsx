@@ -19,7 +19,6 @@ export const EditorTab = ({
   onChange,
   onAddFile,
 }: Props) => {
-  console.log(files, activeFile);
   const [inputMode, setInputMode] = useState(false);
   const handleAddFile = () => {
     setInputMode(true);
@@ -38,7 +37,7 @@ export const EditorTab = ({
             <button
               onClick={() => onChange(key)}
               className={clsx(
-                "inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300",
+                "inline-block px-4 py-2 border-b-2 border-transparent rounded-t-lg hover:bg-gray-800 hover:text-white",
                 {
                   "bg-gray-800 text-white": activeFile === key,
                 }
@@ -52,7 +51,7 @@ export const EditorTab = ({
       <li className="mr-2">
         <button
           onClick={handleAddFile}
-          className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+          className="inline-block px-4 py-2 border-b-2 border-transparent rounded-t-lg hover:bg-gray-800 hover:text-white"
         >
           {inputMode ? (
             <input

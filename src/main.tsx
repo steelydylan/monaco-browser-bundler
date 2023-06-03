@@ -23,6 +23,20 @@ export const Hello = () => {
 }
 `;
 
+const defaultPackage = `{
+  "name": "react-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.tsx",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}`;
+
 const editorData = {
   files: {
     "./index.tsx": {
@@ -35,8 +49,12 @@ const editorData = {
       language: "typescript",
       active: false,
     },
+    "./package.json": {
+      value: defaultPackage,
+      language: "json",
+      active: false,
+    },
   },
-  dependencies: ["react", "react-dom"],
 };
 
 const App = () => {
@@ -45,10 +63,7 @@ const App = () => {
       <div className="flex gap-5 p-5 h-full bg-black h-screen">
         <div className="flex-1 h-full flex flex-row">
           {/* <FileTree /> */}
-          <BrowserEditor
-            files={editorData.files}
-            dependencies={editorData.dependencies}
-          />
+          <BrowserEditor files={editorData.files} />
         </div>
         <div className="flex-1 h-full w-full">
           <Preview entryPoint="./index.tsx" />
