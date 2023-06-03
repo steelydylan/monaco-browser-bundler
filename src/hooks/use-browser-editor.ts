@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { setUpEditor } from "../setup-editor";
+import { setUpEditor } from "../utils/setup-editor";
 import { Files } from "../types";
 import { atom, useRecoilState } from "recoil";
 
