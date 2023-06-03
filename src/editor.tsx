@@ -12,7 +12,6 @@ export const Editor = ({ value, onChange, language, fileName }: Props) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
   useEffect(() => {
-    console.log("editor UseEffect");
     const container = ref.current;
     if (!container) return;
     const editor = monaco.editor.create(container, {
@@ -44,5 +43,5 @@ export const Editor = ({ value, onChange, language, fileName }: Props) => {
     });
   }, []);
 
-  return <div ref={ref} style={{ height: "100vh" }}></div>;
+  return <div ref={ref} className="flex-1"></div>;
 };

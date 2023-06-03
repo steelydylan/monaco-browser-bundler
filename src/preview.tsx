@@ -28,7 +28,7 @@ export const Preview = ({ entryPoint }: Props) => {
   React.useEffect(() => {
     async function init() {
       const main = files[entryPoint];
-      if (!main) return "";
+      if (!main) return;
       const bundledFiles = Object.entries(files).reduce((acc, [key, value]) => {
         acc[key] = value.value;
         return acc;
@@ -43,9 +43,13 @@ export const Preview = ({ entryPoint }: Props) => {
   }, [files, entryPoint]);
 
   return (
-    <iframe
-      srcDoc={srcDoc}
-      className="flex-1 bg-gray-50 h-full p-2 w-full"
-    ></iframe>
+    <div className="rounded-md flex-1 h-full overflow-hidden">
+      <div className="w-full h-11 rounded-t-lg bg-gray-200 flex justify-start items-center space-x-1.5 px-3">
+        <span className="w-3 h-3 rounded-full bg-red-400"></span>
+        <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
+        <span className="w-3 h-3 rounded-full bg-green-400"></span>
+      </div>
+      <iframe srcDoc={srcDoc} className="h-full bg-gray-50 p-2 w-full"></iframe>
+    </div>
   );
 };

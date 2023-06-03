@@ -29,8 +29,12 @@ export const BrowserEditor = ({ files, dependencies }: Props) => {
   return (
     <div className="flex gap-5 p-5 h-full">
       <div className="flex-1 h-full">
-        <div className="text-sm font-medium text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-          <EditorTab files={files} onChange={(key) => setActiveFile(key)} />
+        <div className="text-sm font-medium text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 h-full flex flex-col">
+          <EditorTab
+            files={files}
+            onChange={(key) => setActiveFile(key)}
+            activeFile={activeFile}
+          />
           {activeFile && (
             <Editor
               key={activeFile}
