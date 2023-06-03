@@ -5,7 +5,7 @@ import { Editor } from "./editor";
 import { EditorTab } from "./editor-tab";
 import { Files } from "./types";
 
-import { resolveModuleType } from "./monaco-types-resolver";
+import { resolveModuleType } from "./utils/monaco-types-resolver";
 
 type Props = {
   files: Files;
