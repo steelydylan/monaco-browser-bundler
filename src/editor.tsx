@@ -1,39 +1,48 @@
-import React from 'react';
-import * as monaco from 'monaco-editor'
+import React, { useEffect } from "react";
+import * as monaco from "monaco-editor";
 
 type Props = {
   value: string;
   onChange: (value: string) => void;
   language: string;
   fileName: string;
-}
+};
 
 export const Editor = ({ value, onChange, language, fileName }: Props) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
+  const editorRef = React.useRef<monaco.editor.IStandaloneCodeEditor>();
+  useEffect(() => {
+    console.log("editor UseEffect");
     const container = ref.current;
     if (!container) return;
     const editor = monaco.editor.create(container, {
       // value,
       automaticLayout: true,
-      theme: 'vs-dark',
+      theme: "vs-dark",
     });
-    if (monaco.editor.getModel(monaco.Uri.parse(fileName))) {
-      const model = monaco.editor.getModel(monaco.Uri.parse(fileName));
+    editorRef.current = editor;
+    if (
+      monaco.editor.getModel(
+        monaco.Uri.parse(`file:///${fileName.replace("./", "")}`)
+      )
+    ) {
+      const model = monaco.editor.getModel(
+        monaco.Uri.parse(`file:///${fileName.replace("./", "")}`)
+      );
       editor.setModel(model);
     } else {
-      const model = monaco.editor.createModel(value, language, monaco.Uri.parse(fileName));
+      const model = monaco.editor.createModel(
+        value,
+        language,
+        monaco.Uri.parse(`file:///${fileName.replace("./", "")}`)
+      );
       editor.setModel(model);
     }
     editor.onDidChangeModelContent(() => {
-      const value = editor.getValue();
-      onChange(value);
+      const newValue = editor.getValue();
+      onChange(newValue);
     });
   }, []);
 
-  return (
-    <div ref={ref} style={{ height: "100vh" }}></div>
-  )
-}
-
-
+  return <div ref={ref} style={{ height: "100vh" }}></div>;
+};

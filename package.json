@@ -17,7 +17,7 @@
   "devDependencies": {
     "@types/react-dom": "^18.2.4",
     "@vitejs/plugin-react": "^4.0.0",
-    "browser-bundler": "^0.0.18",
+    "browser-bundler": "^0.0.19",
     "clsx": "^1.2.1",
     "monaco-editor": "^0.38.0",
     "prettier": "^2.8.8",
@@ -28,6 +28,7 @@
   "dependencies": {
     "@types/react": "^18.2.6",
     "react-dom": "^18.2.0",
+    "recoil": "^0.7.7",
     "string-replace-async": "^3.0.2"
   }
 }
