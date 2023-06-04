@@ -8,20 +8,35 @@ const defaultCode = `import React from "react";
 import { render } from "react-dom";
 import { Hello } from "./hello";
 
-render(<Hello />, document.getElementById("root"));
+render(<Hello rewardType="confetti" />, document.getElementById("root"));
 `;
 
-const defaultHello = `import React from "react";
+const defaultHello = `import React, { useEffect } from "react";
+import { useReward } from 'react-rewards'
 
-export const Hello = () => {
+type Props = {
+  rewardType: 'confetti' | 'balloons' | 'emoji'
+}
+
+export const Hello = ({ rewardType }: Props) => {
+  const { reward } = useReward('rewardId', rewardType)
+  const handleClick = () => {
+    reward();
+  }
+
   return (
-    <div className="text-center">
+    <div className="text-center mt-10">
       <h1 className="text-2xl font-bold">Hello, World!</h1>
       <p className="text-gray-500">This is a sample page.</p>
+      <div className="flex justify-center mt-5">
+        <button className="bg-blue-600 text-white block px-4 py-2 text-sm rounded-md" onClick={handleClick}>
+          クリックしてね
+        </button>
+      </div>
+      <div id="rewardId"></div>
     </div>
   )
-}
-`;
+}`;
 
 const defaultPackage = `{
   "name": "react-app",
@@ -30,7 +45,8 @@ const defaultPackage = `{
   "main": "index.tsx",
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-rewards": "2.0.4"
   },
   "devDependencies": {
     "typescript": "^4.3.5"
