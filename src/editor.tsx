@@ -17,7 +17,7 @@ export const Editor = ({ value, onChange, language, fileName }: Props) => {
     const editor = monaco.editor.create(container, {
       // value,
       automaticLayout: true,
-      theme: "vs-dark",
+      theme: "myTheme",
     });
     editorRef.current = editor;
     if (

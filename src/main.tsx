@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import { BrowserEditor } from "./browser-editor";
 import { RecoilRoot } from "recoil";
 import { Preview } from "./preview";
+import { initEditor } from "./utils/setup-editor";
 
 const defaultCode = `import React from "react";
 import { render } from "react-dom";
@@ -89,4 +90,6 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById("root"));
+initEditor().then(() => {
+  render(<App />, document.getElementById("root"));
+});

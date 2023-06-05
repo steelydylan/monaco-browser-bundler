@@ -12,7 +12,7 @@ type Props = {
   dependencies?: string[];
 };
 
-export const BrowserEditor = ({ files, dependencies }: Props) => {
+export const BrowserEditor = ({ files }: Props) => {
   const {
     setActiveFile,
     activeFile,
@@ -29,7 +29,6 @@ export const BrowserEditor = ({ files, dependencies }: Props) => {
   const handleAddFile = (fileName: string) => {
     addFile("./" + fileName);
   };
-
   useEffect(() => {
     const pkg = files["./package.json"];
     try {
