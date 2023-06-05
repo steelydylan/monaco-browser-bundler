@@ -109,22 +109,16 @@ type Files = {
 };
 
 export const initEditor = async () => {
+  await loadWASM("https://esm.sh/onigasm@2.2.5/lib/onigasm.wasm");
   monaco.editor.defineTheme("myTheme", theme);
   monaco.editor.setTheme("myTheme");
-  await loadWASM("https://esm.sh/onigasm@2.2.5/lib/onigasm.wasm");
   const grammers = new Map();
   grammers.set("typescript", "source.tsx");
   grammers.set("javascript", "source.jsx");
   grammers.set("css", "source.css");
   grammers.set("html", "text.html.basic");
   grammers.set("json", "source.json");
-  monaco.editor.onDidCreateEditor(async (editor) => {
-    try {
-      await wireTmGrammars(monaco, registry, grammers, editor);
-    } catch (e) {
-      console.error(e);
-    }
-  });
+  await wireTmGrammars(monaco, registry, grammers);
 };
 
 export const setUpEditor = (files?: Files, dependencies?: string[]) => {

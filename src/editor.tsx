@@ -20,14 +20,10 @@ export const Editor = ({ value, onChange, language, fileName }: Props) => {
       theme: "myTheme",
     });
     editorRef.current = editor;
-    if (
-      monaco.editor.getModel(
-        monaco.Uri.parse(`file:///${fileName.replace("./", "")}`)
-      )
-    ) {
-      const model = monaco.editor.getModel(
-        monaco.Uri.parse(`file:///${fileName.replace("./", "")}`)
-      );
+    const model = monaco.editor.getModel(
+      monaco.Uri.parse(`file:///${fileName.replace("./", "")}`)
+    );
+    if (model) {
       editor.setModel(model);
     } else {
       const model = monaco.editor.createModel(
