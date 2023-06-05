@@ -28,7 +28,12 @@ export const Hello = ({ rewardType }: Props) => {
   return (
     <div className="text-center mt-10">
       <h1 className="text-2xl font-bold">Hello, World!</h1>
-      <p className="text-gray-500">This is a sample page.</p>
+      <p className="text-gray-500 my-2">
+        このエディターの作り方に関する記事はこちら
+      </p>
+      <p className="my-2">
+        <a target="_blank" rel="noopener noreferrer" href="https://zenn.dev/steelydylan/articles/vs-code-experience" className="text-blue-600 underline">https://zenn.dev/steelydylan/articles/vs-code-experience</a>
+      </p>
       <div className="flex justify-center mt-5">
         <button className="bg-blue-600 text-white block px-4 py-2 text-sm rounded-md" onClick={handleClick}>
           クリックしてね
