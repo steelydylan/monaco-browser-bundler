@@ -54,7 +54,11 @@ export const Preview = ({ entryPoint }: Props) => {
         <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
         <span className="w-3 h-3 rounded-full bg-green-400"></span>
       </div>
-      <iframe srcDoc={srcDoc} className="h-full bg-gray-50 p-2 w-full"></iframe>
+      <iframe
+        srcDoc={srcDoc}
+        sandbox="allow-scripts allow-same-origin allow-popups-to-escape-sandbox allow-popups"
+        className="h-full bg-gray-50 p-2 w-full"
+      ></iframe>
     </div>
   );
 };
