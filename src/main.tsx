@@ -42,12 +42,19 @@ export const Hello = ({ rewardType }: Props) => {
           Check the code on GitHub
         </a>
       </p>
+
       <div className="flex justify-center mt-5">
         <button className="bg-blue-600 text-white block px-4 py-2 text-sm rounded-md" onClick={handleClick}>
           Click me!
         </button>
       </div>
       <div id="rewardId"></div>
+      <p className="text-gray-500 my-2">
+        Developed by 
+        <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/steelydylan" className="text-blue-600 underline inline-block ml-2">
+          steelydylan
+        </a>
+      </p>
     </div>
   )
 }`;
