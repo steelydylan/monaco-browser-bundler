@@ -15,7 +15,7 @@ import { resolveModuleType, setCompilerOptions } from "./monaco-types-resolver";
 import { theme } from "./monaco-theme";
 
 const textmatePath =
-  "https://esm.sh/githubusercontent/microsoft/vscode/main/extensions";
+  "https://raw.githubusercontent.com/microsoft/vscode/main/extensions";
 
 const registry = new Registry({
   getGrammarDefinition: async (scopeName) => {
