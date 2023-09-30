@@ -14,14 +14,13 @@ import { loadWASM } from "onigasm"; // peer dependency of 'monaco-textmate'
 import { resolveModuleType, setCompilerOptions } from "./monaco-types-resolver";
 import { theme } from "./monaco-theme";
 
-const textmatePath =
-  "https://raw.githubusercontent.com/microsoft/vscode/main/extensions";
+const textmatePath = "/syntaxes";
 
 const registry = new Registry({
   getGrammarDefinition: async (scopeName) => {
     if (scopeName === "source.tsx") {
       const response = await fetch(
-        `${textmatePath}/typescript-basics/syntaxes/TypeScriptReact.tmLanguage.json`
+        `${textmatePath}/TypeScriptReact.tmLanguage.json`
       );
       return {
         format: "json",
@@ -30,7 +29,7 @@ const registry = new Registry({
     }
     if (scopeName === "source.ts") {
       const response = await fetch(
-        `${textmatePath}/typescript-basics/syntaxes/TypeScriptReact.tmLanguage.json`
+        `${textmatePath}/TypeScriptReact.tmLanguage.json`
       );
       return {
         format: "json",
@@ -39,7 +38,7 @@ const registry = new Registry({
     }
     if (scopeName === "source.js") {
       const response = await fetch(
-        `${textmatePath}/javascript/syntaxes/JavaScriptReact.tmLanguage.json`
+        `${textmatePath}/JavaScriptReact.tmLanguage.json`
       );
       return {
         format: "json",
@@ -48,7 +47,7 @@ const registry = new Registry({
     }
     if (scopeName === "source.jsx") {
       const response = await fetch(
-        `${textmatePath}/javascript/syntaxes/JavaScriptReact.tmLanguage.json`
+        `${textmatePath}/JavaScriptReact.tmLanguage.json`
       );
       return {
         format: "json",
@@ -56,27 +55,14 @@ const registry = new Registry({
       };
     }
     if (scopeName === "source.css") {
-      const response = await fetch(
-        `${textmatePath}/css/syntaxes/css.tmLanguage.json`
-      );
+      const response = await fetch(`${textmatePath}/css.tmLanguage.json`);
       return {
         format: "json",
         content: await response.text(),
       };
     }
     if (scopeName === "text.html.basic") {
-      const response = await fetch(
-        `${textmatePath}/html/syntaxes/html.tmLanguage.json`
-      );
-      return {
-        format: "json",
-        content: await response.text(),
-      };
-    }
-    if (scopeName === "source.json") {
-      const response = await fetch(
-        `${textmatePath}/json/syntaxes/JSON.tmLanguage.json`
-      );
+      const response = await fetch(`${textmatePath}/html.tmLanguage.json`);
       return {
         format: "json",
         content: await response.text(),
@@ -117,7 +103,6 @@ export const initEditor = async () => {
   grammers.set("javascript", "source.jsx");
   grammers.set("css", "source.css");
   grammers.set("html", "text.html.basic");
-  grammers.set("json", "source.json");
   await wireTmGrammars(monaco, registry, grammers);
 };
 

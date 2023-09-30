@@ -6,10 +6,10 @@ import { Preview } from "./preview";
 import { initEditor } from "./utils/setup-editor";
 
 const defaultCode = `import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Hello } from "./hello";
 
-render(<Hello rewardType="confetti" />, document.getElementById("root"));
+createRoot(document.getElementById("root")).render(<Hello rewardType="confetti" />);
 `;
 
 const defaultHello = `import React, { useEffect } from "react";
@@ -65,8 +65,8 @@ const defaultPackage = `{
   "description": "",
   "main": "index.tsx",
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-rewards": "2.0.4"
   },
   "devDependencies": {
@@ -74,8 +74,34 @@ const defaultPackage = `{
   }
 }`;
 
+const indexHTML = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>React App</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+          "react-rewards": "https://esm.sh/react-rewards@2.0.4"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="./index.tsx" type="module"></script>
+  </body>
+</html>`;
+
 const editorData = {
   files: {
+    "./index.html": {
+      value: indexHTML,
+      language: "html",
+      active: false,
+    },
     "./index.tsx": {
       value: defaultCode,
       language: "typescript",
@@ -112,4 +138,9 @@ const App = () => {
 
 initEditor().then(() => {
   render(<App />, document.getElementById("root"));
+});
+
+navigator.serviceWorker.register("/sw.js", {
+  scope: "/mock",
+  type: "module",
 });

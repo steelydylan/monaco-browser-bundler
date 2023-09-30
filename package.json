@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@types/react": "^18.2.6",
+    "localforage": "^1.10.0",
     "monaco-editor-textmate": "^4.0.0",
     "monaco-textmate": "^3.0.1",
     "onigasm": "^2.2.5",
