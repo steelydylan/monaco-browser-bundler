@@ -21,7 +21,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-public
 lib
 yarn.lock
 .yarn/*
