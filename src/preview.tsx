@@ -3,13 +3,10 @@ import { useDebounce } from "use-debounce";
 import { useBrowserEditor } from "./hooks/use-browser-editor";
 import localforage from "localforage";
 
-type Props = {
-  entryPoint: string;
-};
-
-export const Preview = ({ entryPoint }: Props) => {
+export const Preview = () => {
   const { files } = useBrowserEditor();
-  const [debouncedFiles] = useDebounce(files, 1000);
+  const [debouncedFiles] = useDebounce(files, 500);
+  const filesCodes = Object.values(debouncedFiles).map((file) => file?.value);
   const [uniqueId, setUniqueId] = React.useState<string>("");
   React.useEffect(() => {
     async function init() {
@@ -17,7 +14,7 @@ export const Preview = ({ entryPoint }: Props) => {
       setUniqueId(Math.random().toString(32).substring(2));
     }
     init();
-  }, [debouncedFiles]);
+  }, filesCodes);
 
   return (
     <div className="rounded-md flex-1 h-full overflow-hidden">

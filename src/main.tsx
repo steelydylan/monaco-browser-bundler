@@ -129,7 +129,7 @@ const App = () => {
           <BrowserEditor files={editorData.files} />
         </div>
         <div className="flex-1 h-full w-full">
-          <Preview entryPoint="./index.tsx" />
+          <Preview />
         </div>
       </div>
     </RecoilRoot>

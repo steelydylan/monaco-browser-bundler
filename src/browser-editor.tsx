@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import * as monaco from "monaco-editor";
+import { resolveAllModuleType } from "browser-type-resolver";
+
 import { useBrowserEditor } from "./hooks/use-browser-editor";
 import { Editor } from "./editor";
 import { EditorTab } from "./editor-tab";
 import { Files } from "./types";
 
-import { resolveModuleType } from "./utils/monaco-types-resolver";
-
 type Props = {
   files: Files;
-  dependencies?: string[];
+  dependencies?: Record<string, string>;
 };
 
 export const BrowserEditor = ({ files }: Props) => {
@@ -33,8 +33,7 @@ export const BrowserEditor = ({ files }: Props) => {
     const pkg = files["./package.json"];
     try {
       const parsed = JSON.parse(pkg.value);
-      const dependencies = Object.keys(parsed.dependencies);
-      setEditorData({ files, dependencies: dependencies ?? [] });
+      setEditorData({ files, dependencies: parsed.dependencies });
     } catch (e) {}
   }, [files]);
 
@@ -42,10 +41,17 @@ export const BrowserEditor = ({ files }: Props) => {
     if (activeFile !== "./package.json") return;
     try {
       const parsed = JSON.parse(code);
-      const dependencies = Object.keys(parsed.dependencies);
-      dependencies.forEach((dep) => {
-        resolveModuleType(dep, monaco.languages);
+      resolveAllModuleType(parsed.dependencies).then((types) => {
+        Object.entries(types).forEach(([key, value]) => {
+          monaco.languages.typescript.typescriptDefaults.addExtraLib(
+            value,
+            `file:///node_modules/${key}`
+          );
+        });
       });
+      // dependencies.forEach((dep) => {
+      //   resolveModuleType(dep, monaco.languages);
+      // });
     } catch (e) {}
   }, [activeFile, code]);
 

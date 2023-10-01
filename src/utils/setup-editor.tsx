@@ -11,8 +11,28 @@ import HtmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import { wireTmGrammars } from "monaco-editor-textmate";
 import { Registry } from "monaco-textmate"; // peer dependency
 import { loadWASM } from "onigasm"; // peer dependency of 'monaco-textmate'
-import { resolveModuleType, setCompilerOptions } from "./monaco-types-resolver";
+import { languages } from "monaco-editor";
+import { resolveAllModuleType } from "browser-type-resolver";
 import { theme } from "./monaco-theme";
+
+const setCompilerOptions = (lang: typeof languages) => {
+  lang.typescript.typescriptDefaults.setCompilerOptions({
+    target: lang.typescript.ScriptTarget.ES2016,
+    allowNonTsExtensions: true,
+    moduleResolution: lang.typescript.ModuleResolutionKind.NodeJs,
+    module: lang.typescript.ModuleKind.CommonJS,
+    jsx: lang.typescript.JsxEmit.React,
+    noEmit: true,
+    allowJs: true,
+    esModuleInterop: true,
+    typeRoots: ["node_modules/@types"],
+    lib: ["es2016", "dom"],
+  });
+  lang.typescript.typescriptDefaults.setDiagnosticsOptions({
+    noSemanticValidation: false,
+    noSyntaxValidation: false,
+  });
+};
 
 const textmatePath = "/syntaxes";
 
@@ -106,12 +126,20 @@ export const initEditor = async () => {
   await wireTmGrammars(monaco, registry, grammers);
 };
 
-export const setUpEditor = (files?: Files, dependencies?: string[]) => {
+export const setUpEditor = (
+  files?: Files,
+  dependencies?: Record<string, string>
+) => {
   // N0("https://esm.sh/onigasm@2.2.5/lib/onigasm.wasm")
   setCompilerOptions(monaco.languages);
   if (dependencies) {
-    dependencies.forEach((dep) => {
-      resolveModuleType(dep, monaco.languages);
+    resolveAllModuleType(dependencies, { cache: true }).then((types) => {
+      Object.entries(types).forEach(([key, value]) => {
+        monaco.languages.typescript.typescriptDefaults.addExtraLib(
+          value,
+          `file:///node_modules/${key}`
+        );
+      });
     });
   }
   if (!files) return;

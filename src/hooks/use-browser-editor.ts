@@ -7,7 +7,7 @@ export const browserEditorState = atom({
   key: "browserEditorState",
   default: {
     files: {} as Files,
-    dependencies: [] as string[],
+    dependencies: {} as Record<string, string>,
   },
 });
 
