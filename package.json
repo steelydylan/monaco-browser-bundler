@@ -34,6 +34,7 @@
     "onigasm": "^2.2.5",
     "react-dom": "^18.2.0",
     "react-folder-tree": "^5.1.1",
+    "react-spinners": "^0.13.8",
     "recoil": "^0.7.7",
     "string-replace-async": "^3.0.2",
     "use-debounce": "^9.0.4"

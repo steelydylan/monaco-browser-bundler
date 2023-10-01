@@ -12,11 +12,6 @@ self.addEventListener("activate", function (event) {
 
 const app = new Hono();
 
-app.use("/", async (c) => {
-  // pass through
-  return c.next();
-});
-
 app.use("/mock/:fileName", async (c) => {
   const fileName = c.req.param("fileName");
   const storage = await localforage.getItem("files");
