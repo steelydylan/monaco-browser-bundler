@@ -7,7 +7,6 @@ export const browserEditorState = atom({
   key: "browserEditorState",
   default: {
     files: {} as Files,
-    dependencies: {} as Record<string, string>,
   },
 });
 
@@ -39,15 +38,12 @@ const getLanguageFromFileName = (fileName: string) => {
 
 export const useBrowserEditor = () => {
   const [editorData, setEditorData] = useRecoilState(browserEditorState);
-  const { files, dependencies } = editorData;
+  const { files } = editorData;
   useEffect(() => {
-    setUpEditor(
-      {
-        ...files,
-      },
-      dependencies
-    );
-  }, [files, dependencies]);
+    setUpEditor({
+      ...files,
+    });
+  }, [files]);
 
   const setActiveFile = (key: string) => {
     setEditorData((editorData) => ({

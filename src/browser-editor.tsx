@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import * as monaco from "monaco-editor";
-import { resolveAllModuleType } from "browser-type-resolver";
 
 import { useBrowserEditor } from "./hooks/use-browser-editor";
 import { Editor } from "./editor";
@@ -30,30 +29,8 @@ export const BrowserEditor = ({ files }: Props) => {
     addFile("./" + fileName);
   };
   useEffect(() => {
-    const pkg = files["./package.json"];
-    try {
-      const parsed = JSON.parse(pkg.value);
-      setEditorData({ files, dependencies: parsed.dependencies });
-    } catch (e) {}
+    setEditorData({ files });
   }, [files]);
-
-  useEffect(() => {
-    if (activeFile !== "./package.json") return;
-    try {
-      const parsed = JSON.parse(code);
-      resolveAllModuleType(parsed.dependencies).then((types) => {
-        Object.entries(types).forEach(([key, value]) => {
-          monaco.languages.typescript.typescriptDefaults.addExtraLib(
-            value,
-            `file:///node_modules/${key}`
-          );
-        });
-      });
-      // dependencies.forEach((dep) => {
-      //   resolveModuleType(dep, monaco.languages);
-      // });
-    } catch (e) {}
-  }, [activeFile, code]);
 
   return (
     <div className="flex gap-5 p-5 h-full flex-1">
