@@ -10,7 +10,7 @@ export const Preview = () => {
   const [isReady, setIsReady] = useState<boolean>(false);
   useEffect(() => {
     async function init() {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await navigator.serviceWorker.ready;
       await localforage.setItem("files", files);
       setUniqueId(Math.random().toString(32).substring(2));
       setIsReady(true);

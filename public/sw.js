@@ -58,17 +58,25 @@ app.use("/mock/:fileName", async (c) => {
 app.notFound(async (c) => {
   const url = c.req.url;
   const result = await fetch(url);
-  const text = await result.text();
   if (result.headers.get("Content-Type")?.includes("text/html")) {
+    const text = await result.text();
     return c.html(text);
   } else if (
     result.headers.get("Content-Type")?.includes("application/javascript")
   ) {
+    const text = await result.text();
     return c.text(text, 200, {
       "Content-Type": "application/javascript",
     });
   }
-  return await c.next();
+  const body = await result.blob();
+  const headers = {};
+  if (result.headers) {
+    result.headers.forEach((value, key) => {
+      headers[key] = value;
+    });
+  }
+  return c.body(body, result.status, headers);
 });
 
 app.fire();

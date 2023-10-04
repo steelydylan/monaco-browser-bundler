@@ -5,6 +5,8 @@ import { RecoilRoot } from "recoil";
 import { Preview } from "./preview";
 import { initEditor } from "./utils/setup-editor";
 
+import "./styles/index.css";
+
 const defaultCode = `import React from "react";
 import { createRoot } from "react-dom/client";
 import { Hello } from "./hello";
