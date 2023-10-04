@@ -143,6 +143,6 @@ initEditor().then(() => {
 });
 
 navigator.serviceWorker.register("/sw.js", {
-  scope: "/mock",
+  scope: "/",
   type: "module",
 });
